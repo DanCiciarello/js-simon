@@ -24,27 +24,6 @@ function generateRandomNumbers (numMin, numMax, totNum) {
 // ------------------------------------------------------------- //
 // ------------------------------------------------------------- //
 
-// Crea un timer di n secondi
-
-function timerCountdown (totalSeconds, variableOver) {
-
-    let timer = setInterval (function () {
-
-        // Scalo i secondi
-        totalSeconds--
-
-        // Appena arriva a 0 termino il timer
-        if (totalSeconds === 0) {
-            clearInterval(timer);
-            variableOver = true;
-        }
-
-    }, 1000)
-};
-
-// ------------------------------------------------------------- //
-// ------------------------------------------------------------- //
-
 // Confronta due array
 
 function compareArrays (startArray, userArray) {
@@ -61,6 +40,45 @@ function compareArrays (startArray, userArray) {
     }
 
     return numCounter;
+
+};
+
+// ------------------------------------------------------------- //
+// ------------------------------------------------------------- //
+
+// Completa il gioco
+
+function playGame (numElement, startArray, resultElement) {
+
+    // Nascondo il div con i numeri
+    numElement.classList.add("d-none");
+
+    // Creo un array vuoto per i numeri dell'utente
+    let userNums = [];
+
+    // Chiedo all'utente 5 numeri
+    while (userNums.length < 5) {
+
+        let userInput = parseInt(prompt("Inserisci i numeri visti in precedenza"));
+
+        if(isNaN(userInput)) {
+            alert("Inserisci un numero valido!");
+        } else {
+            userNums.push(userInput);
+        }
+    }
+
+    // Comparo gli array
+    let challengeResult = compareArrays(startArray, userNums);
+
+    // Stampo il risultato
+    if (challengeResult === 0) {
+        resultElement.innerHTML = `<h4>Mi spiace, non hai indovinato nessun numero 😞</h4>`
+    } else if (challengeResult === 5) {
+        resultElement.innerHTML = `<h4>Ottima memoria, hai indovinato tutti i numeri! 🎉</h4>`
+    } else {
+        resultElement.innerHTML = `<h4>Sei andato bene, hai indovinato ${challengeResult} numeri. Gioca di nuovo per fare ancora meglio! 💪🏻</h4>`
+    }
 
 };
 
